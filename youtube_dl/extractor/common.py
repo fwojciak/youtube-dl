@@ -67,6 +67,7 @@ from ..utils import (
     RegexNotFoundError,
     sanitized_Request,
     sanitize_filename,
+    sanitize_json_ld,
     str_or_none,
     str_to_int,
     strip_or_none,
@@ -1195,8 +1196,8 @@ class InfoExtractor(object):
         fatal = kwargs.get('fatal', True) if default == NO_DEFAULT else False
         json_ld = []
         for mobj in json_ld_list:
-            json_ld_item = self._parse_json(
-                mobj.group('json_ld'), video_id, fatal=fatal)
+            sanitized_json_ld_str = sanitize_json_ld(mobj.group('json_ld'))
+            json_ld_item = self._parse_json(sanitized_json_ld_str, video_id, fatal=fatal)
             if not json_ld_item:
                 continue
             if isinstance(json_ld_item, dict):

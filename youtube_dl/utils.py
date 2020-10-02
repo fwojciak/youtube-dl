@@ -5705,3 +5705,7 @@ def random_birthday(year_field, month_field, day_field):
         month_field: str(random_date.month),
         day_field: str(random_date.day),
     }
+
+
+def sanitize_json_ld(json_ld):
+    return json_ld.strip().rstrip(';')

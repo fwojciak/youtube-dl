@@ -3213,6 +3213,11 @@ class GenericIE(InfoExtractor):
             return self.playlist_from_matches(
                 zype_urls, video_id, video_title, ie=ZypeIE.ie_key())
 
+        # Look for anchor.fm audio
+        mobj = re.search(r'"audioUrl"\s*:\s*"(?P<url>(?:https?:)?//[^"]+)"', webpage)
+        if mobj:
+            return self.url_result(mobj.group('url'))
+
         # Look for HTML5 media
         entries = self._parse_html5_media_entries(url, webpage, video_id, m3u8_id='hls')
         if entries:
